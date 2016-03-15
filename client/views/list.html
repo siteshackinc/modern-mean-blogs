@@ -1,0 +1,73 @@
+<md-toolbar ng-show="vm.authentication.user.roles == 'user,admin'" class="md-primary md-hue-1 md-whiteframe-z2">
+  <div class="md-toolbar-tools">
+    <h1 class="md-display" style="font-size: 1.2em;font-weight: bold">Admin Menu</h1>
+    <span flex></span>
+    <md-button class="md-icon-button md-mini md-raised md-accent" ui-sref="root.blogs.create">
+      <md-tooltip md-direction="left">
+        Create a new Blog post
+      </md-tooltip>
+      <md-icon>create</md-icon>
+    </md-button>
+  </div>
+</md-toolbar>
+<md-content>
+  <div layout="row" layout-sm="column" layout-xs="column">
+    <div layout="column" layout-padding flex flex-md="70" flex-lg="70" flex-xl="70">
+      <md-list ng-repeat="blog in vm.pagedItems">
+        <md-list-item>
+          <div class="blog-post" flex>
+            <div class="blog-header">
+              <!--Big Date-->
+              <div class="blog-date">
+                <span class="month" ng-bind="blog.created | date:'MMM'"></span>
+                <span class="day" ng-bind="blog.created | date:'dd'"></span>
+                <span class="year" ng-bind="blog.created | date:'yyyy'"></span>
+              </div>
+              <!--/Big Date-->
+              <div class="page-header">
+                <h1 class="md-display-1"><a ui-sref="root.blogs.view({blogId: blog._id})">{{blog.title}}</a></h1>
+              </div>
+              <div class="blog-info clearfix">
+                Posted by: <span ng-if="blog.user" ng-bind="blog.user.displayName"></span>
+                <span ng-if="!blog.user">Deleted User</span>
+              </div>
+            </div>
+            <section ng-bind-html="blog.intro"></section>
+            <md-button
+              class="md-raised md-default"
+              ui-sref="root.blogs.view({blogId: blog._id})"
+              aria-label="Read more about {{blog.title}}">
+              <md-tooltip md-direction="right">
+                Read more about {{blog.title}}
+              </md-tooltip>
+              read more
+              <md-icon>arrow_forward</md-icon>
+            </md-button>
+          </div>
+        </md-list-item>
+      </md-list>
+
+      <div layout="row" layout-align="center center">
+        <uib-pagination
+          boundary-links="true"
+          max-size="8"
+          items-per-page="vm.itemsPerPage"
+          total-items="vm.filterLength"
+          ng-model="vm.currentPage"
+          ng-change="vm.pageChanged()">
+        </uib-pagination>
+      </div>
+      <div layout="row" class="alert alert-warning text-center" ng-if="vm.blogs.$resolved && !vm.blogs.length">
+        No blogs yet, why don't you <a ui-sref="root.blogs.create">create one</a>?
+      </div>
+    </div>
+    <div layout="column" layout-padding flex flex-md="30" flex-lg="30" flex-xl="30">
+      <section>
+        <div class="callout callout-info">
+          <h4>Right Nav</h4>
+          <p>This area will contain various portlets and widgets later on. Maybe even a category menu.</p>
+        </div>
+      </section>
+    </div>
+  </div>
+</md-content>

@@ -1,0 +1,63 @@
+<md-toolbar class="md-primary md-hue-1 md-whiteframe-z2">
+  <div class="md-toolbar-tools">
+    <h1 class="md-display" style="font-size: 1.2em;font-weight: bold">
+      {{vm.blog._id ? 'Edit Blog' : 'New Blog'}}
+    </h1>
+  </div>
+</md-toolbar>
+<md-content layout-padding>
+  <section layout="column">
+    <form name="vm.form.blogForm" ng-submit="vm.save(vm.form.blogForm.$valid)" novalidate>
+      <md-input-container class="md-block">
+        <label>Title</label>
+        <input name="title" type="text" ng-model="vm.blog.title" placeholder="Title" required>
+        <div ng-messages="vm.form.blogForm.title.$error" role="alert">
+          <div ng-message="required">Blog Title is required.</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Image <small class="text-grey">not required</small></label>
+        <input name="image" type="text" ng-model="vm.blog.image" placeholder="Image location">
+        <div ng-messages="vm.form.blogForm.image.$error" role="alert">
+          <div ng-message="required">Blog Image is required.</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Intro Content <small class="text-grey">begin here</small></label>
+        <textarea name="intro" ng-model="vm.blog.intro" required></textarea>
+        <div ng-messages="vm.form.blogForm.intro.$error" role="alert">
+          <div ng-message="required">Blog Intro Content is required.</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Main Content <small class="text-grey">finish here</small></label>
+        <textarea name="content" ng-model="vm.blog.content" required></textarea>
+        <div ng-messages="vm.form.blogForm.content.$error" role="alert">
+          <div ng-message="required">Blog Main Content is required.</div>
+        </div>
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Meta Description</label>
+        <input type="text" id="description" name="description" ng-model="vm.blog.description" placeholder="Blog Description (optional)">
+      </md-input-container>
+      <md-input-container class="md-block">
+        <label>Meta Keywords <small class="text-grey">Separate with a comma</small></label>
+        <input type="text" id="keywords" name="keywords" ng-model="vm.blog.keywords" placeholder="Blog Keywords">
+      </md-input-container>
+      <section layout="row" layout-align="center center">
+        <md-button ng-disabled="vm.form.blogForm.$invalid" class="md-raised md-accent" type="submit">
+          <i class="fa fa-save fa-fw"></i>
+          {{vm.blog._id ? 'update' : 'publish'}}
+        </md-button>
+        &nbsp;or&nbsp;
+        <md-button class="md-raised md-default" ui-sref="root.blogs.list">
+          <i class="fa fa-mail-reply fa-fw"></i>
+          back
+        </md-button>
+      </section>
+      <div ng-show="vm.error">
+        <strong ng-bind="vm.error"></strong>
+      </div>
+    </form>
+  </section>
+</md-content>
