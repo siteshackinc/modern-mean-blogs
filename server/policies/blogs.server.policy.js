@@ -8,6 +8,15 @@ let acl = new nodeacl(new nodeacl.memoryBackend());
 function policy() {
   return new Promise(function(resolve, reject) {
     acl.allow([{
+      roles: ['admin'],
+      allows: [{
+        resources: '/',
+        permissions: '*'
+      }, {
+        resources: '/:blogId',
+        permissions: '*'
+      }]
+    }, {
       roles: ['user'],
       allows: [{
         resources: '/',
@@ -54,7 +63,7 @@ function allowed(req, res, next) {
     });
 }
 
-let adminPolicy = { policy: policy, allowed: allowed }
+let userPolicy = { policy: policy, allowed: allowed }
 
 export { policy, allowed }
 export default userPolicy;
