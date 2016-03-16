@@ -48,4 +48,4 @@ function allowed(req, res, next) {
 let adminPolicy = { policy: policy, allowed: allowed }
 
 export { policy, allowed }
-export default userPolicy;
+export default adminPolicy;
